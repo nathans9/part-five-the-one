@@ -10,12 +10,10 @@ using System.Timers;
 using System.Windows.Input;
 
 namespace part_five_the_one
-{
-    //TO DO
-    //FOR THE PARKING GARAGE, ALLOW THE USER TO JUST SIT THERE AND USING A TIMER, COUNT FOR HOW LONG THEY SIT AT THE EMPTY CONSOLE
-    //MAKE SURE EVERYTHING IS OWNED BY MULTIMEDIA CONGLOMERATE GARGOLOMEW
+{ 
     internal class Program
     {
+        // Nathan
         const int MF_BYCOMMAND = 0x00000000;
         public const int SC_CLOSE = 0xF060;
         const int SC_MINIMIZE = 0xF020;
@@ -61,9 +59,6 @@ namespace part_five_the_one
             string accept = "Press Y at any time to accept the terms and conditions, or press any other key to deny them.";
             string[] leave = { "If you are not here for business, please leave the building.", "[Security guards appear and escort you out]", "You have insufficient funds in your account to pay the transaction fee." };
 
-
-            string currency = "Kč";
-
             for (int i = 0; i < main[0].Length; i++)
             {
                 Console.Write(main[0][i]);
@@ -107,7 +102,7 @@ namespace part_five_the_one
                 Thread.Sleep(15);
             }
 
-            tactimer.Elapsed += new ElapsedEventHandler(TACTimer);
+            tactimer.Elapsed += new ElapsedEventHandler(TACTimer); //Timer is used to type out the terms and conditions, and allows for the ReadKey to still be active.
             tactimer.Interval = 1;
             tactimer.Enabled = true;
             Console.WriteLine("");
@@ -137,7 +132,6 @@ namespace part_five_the_one
             {
                 bool chosen = false;
                 bool quieres = true;
-                int j;
 
 
                 while (!chosen)
@@ -210,8 +204,6 @@ namespace part_five_the_one
                                 }
 
                                 Console.CursorVisible = true;
-
-                                string userChoice;
 
                                 cki = Console.ReadKey();
 
@@ -394,9 +386,8 @@ namespace part_five_the_one
             timeDiff = timeReturned - timeLeft;
 
 
-            if (timeDiff < 1)
-                cost = cost;
-            else if (timeDiff >= 1 && timeDiff < 2)
+            
+            if (timeDiff >= 1 && timeDiff < 2)
                 cost = cost * 2;
             else if (timeDiff >= 2 && timeDiff < 3)
                 cost = cost * 3;
@@ -535,7 +526,7 @@ namespace part_five_the_one
                 Console.SetCursorPosition(0, p);
                 bool text2 = true;
 
-                switch (cki.Key)
+                switch (cki.Key) //I didn't want to make more methods for the seperate cases.  I probably should have.  I put if statements in there so I could just minimise the code.
                 {
                     case ConsoleKey.D1:
                         if (text2)
@@ -811,7 +802,7 @@ namespace part_five_the_one
             string amount = "";
             string[] asset = { ".", "Kč" };
             double ddeposit;
-            invtimer.Elapsed += new ElapsedEventHandler(DepositTimer);
+            invtimer.Elapsed += new ElapsedEventHandler(DepositTimer); //timer that tracks how long a user is idle if they make an invalid selction
             invtimer.Interval = 1000;
             Console.WriteLine(tengo + asset[1] + pocketChange + asset[0]);
 
@@ -921,7 +912,7 @@ namespace part_five_the_one
             string amount = "";
             string[] asset = { ".", "Kč" };
             double dwithdraw;
-            invtimer.Elapsed += new ElapsedEventHandler(DepositTimer);
+            invtimer.Elapsed += new ElapsedEventHandler(DepositTimer); 
             invtimer.Interval = 1000;
 
             for (int i = 0; i < swithdraw[0].Length; i++)
@@ -1250,7 +1241,7 @@ namespace part_five_the_one
             Console.WindowWidth = Console.LargestWindowWidth;
             DeleteMenu(GetSystemMenu(GetConsoleWindow(), false), SC_MINIMIZE, MF_BYCOMMAND);
             DeleteMenu(GetSystemMenu(GetConsoleWindow(), false), SC_MAXIMIZE, MF_BYCOMMAND);
-            DeleteMenu(GetSystemMenu(GetConsoleWindow(), false), SC_SIZE, MF_BYCOMMAND);
+            DeleteMenu(GetSystemMenu(GetConsoleWindow(), false), SC_SIZE, MF_BYCOMMAND); //You can't resize the console anymore, so the program cannot be bugged.
             Console.CursorVisible = false;
             Console.BackgroundColor = ConsoleColor.Black;
             Console.Clear();
@@ -1263,7 +1254,8 @@ namespace part_five_the_one
                 {
                     Console.Write(drag[i]);
                     Thread.Sleep(15);
-                }
+                } 
+                //You will see a lot of these for loops.  I never thought of making them a method...  This will be implemented in the future, but I like these loops because it makes the text scroll and it looks cool.
                 Console.ReadKey();
                 Console.Clear();
 
@@ -1299,13 +1291,13 @@ namespace part_five_the_one
             bool quieres = true;
             int j;
 
-            while (!chosen)
+            while (!chosen) //menu
             {
                 if (!visited)
                     j = 0;
                 else
                     j = 7;
-                while (quieres)
+                while (quieres) //prints the text all at the same time
                 {
                     for (int i = 0; i < option[2].Length; i++)
                     {
@@ -1355,7 +1347,7 @@ namespace part_five_the_one
 
                 string invalid = "That is not a valid choice.";
 
-                cki = Console.ReadKey();
+                cki = Console.ReadKey(); //more convenient than a ReadLine
 
                 Console.CursorVisible = false;
 
@@ -1508,7 +1500,7 @@ For full terms and conditions please visit www.bmo.com/familybundle, and read ou
 *99. There is no fee charged for transfers from your Saving Amplifier Account to your other BMO account through BMO Mobile and Online Banking, at a BMO ATM, or when using the BMO Telephone Banking interactive voice response(or self-serve). A fee applies for each pre-authorized debit, cash withdrawal, and transfers from your Savings Amplifier Account to your other BMO account when performed at a branch or with a Customer Contact Centre associate.Refer to Agreements, Bank Plans and Fees for Everyday Banking.
 *100. To open a new Premium Rate Savings account online, you are required to have a Primary Chequing Account with a Bank Plan.New customers can open a Premium Rate Savings Account at a local BMO branch without the requirement to have a Primary Chequing Account.
 ®§ Interac e-Transfer is a registered trademark
-";
+"; //Terms and Conditions copied from BMO
             
                 if (tick < termsAndConditions.Length)
                 {
@@ -1542,7 +1534,7 @@ For full terms and conditions please visit www.bmo.com/familybundle, and read ou
                 }
                     IntPtr hWnd = System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle;
 
-                    PostMessage(hWnd, WM_KEYDOWN, VK_RETURN, 0);
+                    PostMessage(hWnd, WM_KEYDOWN, VK_RETURN, 0); //The previous two lines simulate an enter key press.  This stops the ReadKey automatically so that the user can return to the menu.
                 Thread.Sleep(1000);
                 }
 
